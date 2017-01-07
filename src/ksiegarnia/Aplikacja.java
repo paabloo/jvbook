@@ -33,10 +33,13 @@ public class Aplikacja {
         Scanner input=new Scanner(System.in);
         String name,title,isbn,author;
         boolean access;
+        int id;
 
         access=true;
 
         for(;;){
+            System.out.println("Podaj id");
+            id=input.nextInt();
             System.out.println("Podaj ISBN książki");
             isbn=input.nextLine();
 
@@ -47,7 +50,7 @@ public class Aplikacja {
             author=input.nextLine();
 
             if(!isbn.equals("stop") || !title.equals("stop") || !author.equals("stop") || !isbn.equals("stop") ){
-                tablica.add(new Ksiazka(isbn,title,author,access));
+                tablica.add(new Ksiazka(id,isbn,title,author,access));
                 System.out.println("--------------------------------- dodano! aby przerwać wpisz 'stop'");
             }
             else{
@@ -70,7 +73,7 @@ public class Aplikacja {
         else{
             for (Ksiazka i: tablica ) {
                 if(i.access==true){
-                    System.out.println(j+"  "+i.title+"   "+i.getId());
+                    System.out.println(j+"  "+i.title+"  id: "+i.getId());
                 }
                 j++;
             }
@@ -100,8 +103,8 @@ public class Aplikacja {
         ArrayList<Uzytkownik> tablicaUzytkownikow = new ArrayList<Uzytkownik>();
 
 
-        tablicaKsiazek.add(new Ksiazka("123654asf","ksiazka1","ziom1",true));
-        tablicaKsiazek.add(new Ksiazka("123654asfasfasf","ksiazka2","ziom2",true));
+        tablicaKsiazek.add(new Ksiazka(1,"123654asf","ksiazka1","ziom1",true));
+        tablicaKsiazek.add(new Ksiazka(2,"123654asfasfasf","ksiazka2","ziom2",true));
 
         tablicaUzytkownikow.add(new Uzytkownik("ziomek1","ziomek1"));
         tablicaUzytkownikow.add(new Uzytkownik("ziomek2","ziomek2"));

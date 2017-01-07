@@ -4,18 +4,19 @@ package ksiegarnia;
  * Created by Adam on 17.12.2016.
  */
 public class Ksiazka {
-    public static int id=1;
+    public int id;
     public String isbn,title,author;
     public boolean access;
 
 
 
-    public Ksiazka(String isbn, String title, String author, boolean access) {
+    public Ksiazka(int id,String isbn, String title, String author, boolean access) {
+        this.id=id;
         this.isbn = isbn;
         this.title = title;
         this.author = author;
         this.access = access;
-        this.id++;
+//        this.id++;
     }
 
     public String getISBN(){
