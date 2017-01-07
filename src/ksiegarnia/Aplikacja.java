@@ -12,8 +12,15 @@ import java.util.Scanner;
 
 
 public class Aplikacja {
-    public static void pozyczKsiazke(){
-
+    public static void pozyczKsiazke(String id_book,ArrayList<Ksiazka> ksiegarnia){
+        int id_w=Integer.parseInt(id_book);
+        for (Ksiazka k:ksiegarnia) {
+            if(id_w==k.id){
+                k.changeAccess(false);
+                System.out.println("Wypożyczono :  " +k.getTitle());
+                break;
+            }
+        }
     }
 
     public static void offset(){
@@ -63,12 +70,12 @@ public class Aplikacja {
         else{
             for (Ksiazka i: tablica ) {
                 if(i.access==true){
-                    System.out.println(j+"  "+i.title);
+                    System.out.println(j+"  "+i.title+"   "+i.getId());
                 }
                 j++;
             }
         }
-        Aplikacja.offset();
+//        Aplikacja.offset();
     }
 
     public static int  yourChoise(String wybor){
@@ -91,6 +98,10 @@ public class Aplikacja {
         Scanner input=new Scanner(System.in);
         ArrayList<Ksiazka> tablicaKsiazek = new ArrayList<Ksiazka>();
         ArrayList<Uzytkownik> tablicaUzytkownikow = new ArrayList<Uzytkownik>();
+
+
+        tablicaKsiazek.add(new Ksiazka("123654asf","ksiazka1","ziom1",true));
+        tablicaKsiazek.add(new Ksiazka("123654asfasfasf","ksiazka2","ziom2",true));
 
         tablicaUzytkownikow.add(new Uzytkownik("ziomek1","ziomek1"));
         tablicaUzytkownikow.add(new Uzytkownik("ziomek2","ziomek2"));
@@ -141,7 +152,10 @@ public class Aplikacja {
             while(!texter.equals("5")) {
 
                 switch (texter){
-                    case "1": break;
+                    case "1":
+                        System.out.println("Wpisz ID danej książki");
+                        texter=input.nextLine();
+                        pozyczKsiazke(texter,tablicaKsiazek);break;
                     case "2": ShowAllBook(tablicaKsiazek,psswd);break;
                     case  "3":
                         System.out.println("jaka Kwota  ?");
