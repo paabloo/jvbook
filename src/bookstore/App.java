@@ -1,87 +1,71 @@
-package ksiegarnia;
-
-//import com.sun.java.util.jar.pack.Instruction;
+package bookstore;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-/**
- * Created by Adam on 17.12.2016.
- */
 
-
-public class Aplikacja {
-    public static void pozyczKsiazke(String id_book,ArrayList<Ksiazka> ksiegarnia){
+public class App {
+    public static void borrowBook(String id_book,ArrayList<Book> bookstore){
         int id_w=Integer.parseInt(id_book);
-        for (Ksiazka k:ksiegarnia) {
+        for (Book k:bookstore) {
             if(id_w==k.id){
                 k.changeAccess(false);
-                System.out.println("Wypożyczono :  " +k.getTitle());
+                System.out.println("Borrow: " +k.getTitle());
                 break;
             }
         }
     }
 
-    public static void offset(){
+    public static void offset() {
         for (int i=0;i<=50;i++){
             System.out.println(".");
         }
     }
-    public static void AddNewBook(ArrayList<ksiegarnia.Ksiazka> tablica){
-
+    public static void AddNewBook(ArrayList<bookstore.Book> tablica){
         Scanner input=new Scanner(System.in);
         String name,title,isbn,author;
         boolean access;
         int id;
-
         access=true;
-
-        for(;;){
-            System.out.println("Podaj id");
+        while(true) {
+            System.out.println("ID:");
             id=input.nextInt();
-            System.out.println("Podaj ISBN książki");
+            System.out.println("ISBN:");
             isbn=input.nextLine();
-
-            System.out.println("Podaj tytul książki");
+            System.out.println("Title:");
             title=input.nextLine();
-
-            System.out.println("Podaj Autora książki");
+            System.out.println("Author");
             author=input.nextLine();
-
-            if(!isbn.equals("stop") || !title.equals("stop") || !author.equals("stop") || !isbn.equals("stop") ){
-                tablica.add(new Ksiazka(id,isbn,title,author,access));
-                System.out.println("--------------------------------- dodano! aby przerwać wpisz 'stop'");
+            if(!isbn.equals("S") || !title.equals("S") || !author.equals("S") || !isbn.equals("S") ){
+                tablica.add(new Book(id,isbn,title,author,access));
+                System.out.println("Added. Type 'S' to stop.");
             }
             else{
                 break;
             }
         }
-
-
     }
 
-    public static void ShowAllBook(ArrayList<Ksiazka> tablica,String moder){
+    public static void ShowAllBook(ArrayList<Book> tablica,String moder){
         int j=1;
-
         if(moder.equals("admin")){
-            for (Ksiazka i: tablica ) {
+            for (Book i: tablica ) {
                 System.out.println(j+"  "+i.title);
                 j++;
             }
         }
         else{
-            for (Ksiazka i: tablica ) {
+            for (Book i: tablica ) {
                 if(i.access==true){
                     System.out.println(j+"  "+i.title+"  id: "+i.getId());
                 }
                 j++;
             }
         }
-//        Aplikacja.offset();
     }
 
-    public static int  yourChoise(String wybor){
+    public static int yourChoice(String wybor){
         while(!wybor.equals("stop")){
             switch(wybor){
                 case "1": System.out.println("");break;
@@ -91,61 +75,38 @@ public class Aplikacja {
         return 0;
     }
 
-//    public static void userWalletPlus(Uzytkownik u1 , double hajs){
-//        u1.upgradeWallet(hajs);
-//    }
-
 
     public static void main(String[] args) throws IOException {
-
         Scanner input=new Scanner(System.in);
-        ArrayList<Ksiazka> tablicaKsiazek = new ArrayList<Ksiazka>();
-        ArrayList<Uzytkownik> tablicaUzytkownikow = new ArrayList<Uzytkownik>();
-
-
-        tablicaKsiazek.add(new Ksiazka(1,"123654asf","ksiazka1","ziom1",true));
-        tablicaKsiazek.add(new Ksiazka(2,"123654asfasfasf","ksiazka2","ziom2",true));
-
-        tablicaUzytkownikow.add(new Uzytkownik("ziomek1","ziomek1"));
-        tablicaUzytkownikow.add(new Uzytkownik("ziomek2","ziomek2"));
-
-
+        ArrayList<Book> booksArray = new ArrayList<Book>();
+        ArrayList<User> usersArray = new ArrayList<User>();
+        booksArray.add(new Book(1,"123654asf","ksiazka1","ziom1",true));
+        booksArray.add(new Book(2,"123654asfasfasf","ksiazka2","ziom2",true));
+        usersArray.add(new User("ziomek1","ziomek1"));
+        usersArray.add(new User("ziomek2","ziomek2"));
         String texter,psswd,lgn;
-
         System.out.println("--------------- Zaloguj się ---------------");
         System.out.println("login : ");
         lgn=input.nextLine();
         System.out.println("hasło : ");
         psswd=input.nextLine();
-
-
         if(psswd.equals("admin") && lgn.equals("admin")){
-
             System.out.println("zalogowano jako ADMIN ");
             System.out.println("Co chcesz zrobić ?");
-
             System.out.println("1. Dodaj nową Książkę | 2. Wylistuj Wsiążki | 3. Sprawdź ilość użytkowników | 4. " + "Zakończ");
-
             texter=input.nextLine();
-
             while(!texter.equals("4")){
-
-
                 switch (texter){
-                    case "1": AddNewBook(tablicaKsiazek);break;
-                    case "2": ShowAllBook(tablicaKsiazek,psswd);break;
+                    case "1": AddNewBook(booksArray);break;
+                    case "2": ShowAllBook(booksArray,psswd);break;
                 }
-//                offset();
                 System.out.println("Co chcesz teraz zrobić ?");
                 System.out.println("1. Dodaj nową Książkę | 2. Wylistuj Wsiążki | 3. Sprawdź ilość użytkowników | 4. " + "Zakończ");
                 texter=input.nextLine();
             }
-
-
         }
         else{
-
-            Uzytkownik momentUser=new Uzytkownik(lgn,psswd);
+            User momentUser=new User(lgn,psswd);
             offset();
             System.out.println("zalogowano jako użytkownik: "+lgn);
             System.out.println("Co chcesz zrobić ?");
@@ -153,36 +114,24 @@ public class Aplikacja {
                     "portfelu" +" 5. Zakończ");
             texter=input.nextLine();
             while(!texter.equals("5")) {
-
                 switch (texter){
                     case "1":
                         System.out.println("Wpisz ID danej książki");
                         texter=input.nextLine();
-                        pozyczKsiazke(texter,tablicaKsiazek);break;
-                    case "2": ShowAllBook(tablicaKsiazek,psswd);break;
+                        borrowBook(texter,booksArray);break;
+                    case "2": ShowAllBook(booksArray,psswd);break;
                     case  "3":
                         System.out.println("jaka Kwota  ?");
                         texter=input.nextLine();
 
                         momentUser.upgradeWallet(texter);break;
-                    case "4": System.out.println("Na koncie masz : "+momentUser.getHajs()); break;
+                    case "4": System.out.println("Na koncie masz : "+momentUser.getMoney()); break;
                 }
-
                 System.out.println("Co chcesz teraz zrobić ?");
                 System.out.println("1. Pożycz książkę | 2. Wylistuj dostępne ksiązki | 3. zasil portfel | 4. piniondz w " +
                         "portfelu" +" 5. Zakończ");
                 texter=input.nextLine();
             }
-
-
-//            System.out.println("zalogowano jako użytkownik: "+lgn);
         }
-
-
-
-
-
-
-
     }
 }
